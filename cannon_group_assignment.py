@@ -180,11 +180,11 @@ class Target(GameObject):
     def draw(self, screen):
        # Draws the target on the screen  
             
-       pg.draw.circle(screen, self.color, self.coord, self.rad)
+       #pg.draw.circle(screen, self.color, self.coord, self.rad)
 
-       #smile = pg.image.load('smallface.png')
+       smile = pg.image.load('smallface.png')
        
-       #screen.blit(smile,self.coord)
+       screen.blit(smile,self.coord)
     
 
 
