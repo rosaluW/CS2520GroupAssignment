@@ -73,7 +73,6 @@ class Shell(GameObject):
         Adds the background image
         Draws the ball on appropriate surface.
         '''
-        screen.blit(background, (0,0))
         #pg.draw.circle(screen, self.color, self.coord, self.rad)
         missle = pg.image.load('missle.png')
        
@@ -302,6 +301,7 @@ class Manager:
         '''
         Runs balls', gun's, targets' and score table's drawing method.
         '''
+        screen.blit(background, (0,0))
         for ball in self.balls:
             ball.draw(screen)
         for target in self.targets:
