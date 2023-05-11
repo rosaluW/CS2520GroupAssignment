@@ -70,10 +70,11 @@ class Shell(GameObject):
         '''
         Draws the ball on appropriate surface.
         '''
-        pg.draw.circle(screen, self.color, self.coord, self.rad)
-        
-
+        #pg.draw.circle(screen, self.color, self.coord, self.rad)
+        missle = pg.image.load('missle.png')
        
+        screen.blit(missle,self.coord)
+              
 
 
 class Cannon(GameObject):
@@ -175,17 +176,19 @@ class Target(GameObject):
         
         dist = sum([(self.coord[i] - ball.coord[i])**2 for i in range(2)])**0.5
         min_dist = self.rad + ball.rad
-        return dist <= min_dist 
+        return dist <= min_dist
+    
 
     def draw(self, screen):
        # Draws the target on the screen  
             
-       pg.draw.circle(screen, self.color, self.coord, self.rad)
+       #pg.draw.circle(screen, self.color, self.coord, self.rad)
 
-       #smile = pg.image.load('smallface.png')
+       smile = pg.image.load('smallface.png')
        
-       #screen.blit(smile,self.coord)
-    
+       screen.blit(smile,self.coord)
+
+   
 
 
     def move(self):
@@ -266,6 +269,7 @@ class Manager:
         self.move()
         self.collide()
         self.draw(screen)
+        
 
         if len(self.targets) == 0 and len(self.balls) == 0:
             self.new_mission()
@@ -335,6 +339,7 @@ class Manager:
         for j in reversed(targets_c):
             self.score_t.t_destr += 1
             self.targets.pop(j)
+           
 
 
 screen = pg.display.set_mode(SCREEN_SIZE)
