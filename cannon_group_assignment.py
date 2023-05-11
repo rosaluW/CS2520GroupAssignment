@@ -9,7 +9,9 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
-SCREEN_SIZE = (800, 600)
+SCREEN_SIZE = (800, 491)
+#background image
+background = pg.image.load('background.jpeg')
 
 
 def rand_color():
@@ -68,8 +70,10 @@ class Shell(GameObject):
 
     def draw(self, screen):
         '''
+        Adds the background image
         Draws the ball on appropriate surface.
         '''
+        screen.blit(background, (0,0))
         #pg.draw.circle(screen, self.color, self.coord, self.rad)
         missle = pg.image.load('missle.png')
        
@@ -185,11 +189,7 @@ class Target(GameObject):
        #pg.draw.circle(screen, self.color, self.coord, self.rad)
 
        smile = pg.image.load('smallface.png')
-       
        screen.blit(smile,self.coord)
-
-   
-
 
     def move(self):
         """
