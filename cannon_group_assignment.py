@@ -147,9 +147,13 @@ class Cannon(GameObject):
         gun_shape.append((gun_pos - vec_1).tolist())
         pg.draw.polygon(screen, self.color, gun_shape)
         
-
-       
-       
+        tank_image = pg.image.load('tank.png')
+        tank_image = pg.transform.scale(tank_image, (100, 100))
+        tank_rect = tank_image.get_rect()
+        tank_center = np.array([tank_rect.width/2, tank_rect.height/2])
+        tank_pos = gun_pos - tank_center
+        rotated_tank = pg.transform.rotate(tank_image, np.degrees(self.angle))
+        screen.blit(rotated_tank, tank_pos)
         
 
 
