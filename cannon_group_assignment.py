@@ -143,7 +143,8 @@ class Cannon(GameObject):
 
     def draw(self, screen):
         '''
-        Draws the gun on the screen.
+        Adds the tank image, and makes it move along with the gun direction.
+        Draws the gun on the screen. 
         '''
         gun_shape = []
         vec_1 = np.array([int(5*np.cos(self.angle - np.pi/2)), int(5*np.sin(self.angle - np.pi/2))])
@@ -155,6 +156,7 @@ class Cannon(GameObject):
         gun_shape.append((gun_pos - vec_1).tolist())
         pg.draw.polygon(screen, self.color, gun_shape)
         
+        #tank image
         tank_image = pg.image.load('tank.png')
         tank_image = pg.transform.scale(tank_image, (100, 100))
         tank_rect = tank_image.get_rect()
