@@ -84,11 +84,15 @@ class Cannon(GameObject):
     '''
     Cannon class. Manages it's renderring, movement and striking.
     '''
-    def __init__(self, coord=[30, SCREEN_SIZE[1]//2], angle=0, max_pow=50, min_pow=10, color=RED):
+    def __init__(self, x_coord, y_coord, coord=[0,0], angle=0, max_pow=50, min_pow=10, color=RED):
+
+        #coord=[30, SCREEN_SIZE[1]//2]
         '''
         Constructor method. Sets coordinate, direction, minimum and maximum power and color of the gun.
         '''
-        self.coord = coord
+        self.x_coord = x_coord
+        self.y_coord = y_coord
+        self.coord = [x_coord, y_coord]
         self.angle = angle
         self.max_pow = max_pow
         self.min_pow = min_pow
@@ -133,6 +137,10 @@ class Cannon(GameObject):
         if (self.coord[1] > 30 or inc > 0) and (self.coord[1] < SCREEN_SIZE[1] - 30 or inc < 0):
             self.coord[1] += inc
 
+    def move_horizontal(self, inc):
+        if (self.coord[0] > SCREEN_SIZE[1]//2 or inc > 0) and (self.coord[0] < SCREEN_SIZE[1] - SCREEN_SIZE[1]//2 or inc < 0):
+            self.coord[0] += inc
+
     def draw(self, screen):
         '''
         Draws the gun on the screen.
@@ -155,6 +163,11 @@ class Cannon(GameObject):
         rotated_tank = pg.transform.rotate(tank_image, np.degrees(self.angle))
         screen.blit(rotated_tank, tank_pos)
         
+        tank_image2 = pg.image.load('tank.png')
+        tank_image2 = pg.transform.scale(tank_image, (100, 100))
+        tank_flip = pg.transform.flip(tank_image2, True, False)
+
+        screen.blit(tank_flip,(700,200))
 
 
 class Target(GameObject):
@@ -242,7 +255,8 @@ class Manager:
     '''
     def __init__(self, n_targets=1):
         self.balls = []
-        self.gun = Cannon()
+        self.gun = Cannon(30, SCREEN_SIZE[1]//2)
+        self.gun2 = Cannon(SCREEN_SIZE[1], SCREEN_SIZE[1]//2)
         self.targets = []
         self.score_t = ScoreTable()
         self.n_targets = n_targets
@@ -290,8 +304,14 @@ class Manager:
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_UP:
                     self.gun.move(-5)
+                    self.gun2.move(-5)
                 elif event.key == pg.K_DOWN:
                     self.gun.move(5)
+                    self.gun2.move(5)
+                elif event.key == pg.K_RIGHT:
+                    self.gun.move_horizontal(5)
+                elif event.key == pg.K_LEFT:
+                    self.gun.move_horizontal(-5)
             elif event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     self.gun.activate()
@@ -311,6 +331,7 @@ class Manager:
         for target in self.targets:
             target.draw(screen)
         self.gun.draw(screen)
+        self.gun2.draw(screen)
         self.score_t.draw(screen)
 
     def move(self):
