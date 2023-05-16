@@ -160,13 +160,28 @@ class Cannon(GameObject):
         tank_rect = tank_image.get_rect()
         tank_center = np.array([tank_rect.width/2, tank_rect.height/2])
         tank_pos = gun_pos - tank_center
-        rotated_tank = pg.transform.rotate(tank_image, np.degrees(self.angle))
+        rotated_tank = pg.transform.rotate(tank_image, np.degrees(self.angle * -1))
         screen.blit(rotated_tank, tank_pos)
-        
-        tank_image2 = pg.image.load('tank.png')
-        tank_image2 = pg.transform.scale(tank_image, (100, 100))
-        tank_flip = pg.transform.flip(tank_image2, True, False)
-        screen.blit(tank_flip,(700,200))
+
+    def draw_tank2(self, screen):
+        gun_shape = []
+        vec_1 = np.array([int(5*np.cos(self.angle - np.pi/2)), int(5*np.sin(self.angle - np.pi/2))])
+        vec_2 = np.array([int(self.pow*np.cos(self.angle)), int(self.pow*np.sin(self.angle))])
+        gun_pos = np.array(self.coord)
+        gun_shape.append((gun_pos + vec_1).tolist())
+        gun_shape.append((gun_pos + vec_1 + vec_2).tolist())
+        gun_shape.append((gun_pos + vec_2 - vec_1).tolist())
+        gun_shape.append((gun_pos - vec_1).tolist())
+        pg.draw.polygon(screen, self.color, gun_shape)
+
+        tank_image = pg.image.load('tank.png')
+        tank_image = pg.transform.scale(tank_image, (100, 100))
+        tank_image = pg.transform.flip(tank_image, True, False)
+        tank_rect = tank_image.get_rect()
+        tank_center = np.array([tank_rect.width/2, tank_rect.height/2])
+        tank_pos = gun_pos - tank_center
+        rotated_tank = pg.transform.rotate(tank_image, np.degrees(self.angle * -1))
+        screen.blit(rotated_tank, tank_pos)
 
 
 class Target(GameObject):
@@ -255,7 +270,7 @@ class Manager:
     def __init__(self, n_targets=1):
         self.balls = []
         self.gun = Cannon(30, SCREEN_SIZE[1]//2)
-        self.gun2 = Cannon(SCREEN_SIZE[1], SCREEN_SIZE[1]//2)
+        self.gun2 = Cannon(SCREEN_SIZE[1] + 280, SCREEN_SIZE[1]//2)
         self.targets = []
         self.score_t = ScoreTable()
         self.n_targets = n_targets
@@ -334,7 +349,7 @@ class Manager:
         for target in self.targets:
             target.draw(screen)
         self.gun.draw(screen)
-        self.gun2.draw(screen)
+        self.gun2.draw_tank2(screen)
         self.score_t.draw(screen)
 
     def move(self):
@@ -408,5 +423,5 @@ while not done:
     circles.draw(screen)
     pg.display.flip()
     clock.tick(60)
-
+ 
 pg.quit()
