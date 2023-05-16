@@ -176,7 +176,7 @@ class Cannon(GameObject):
 
         tank_image = pg.image.load('tank.png')
         tank_image = pg.transform.scale(tank_image, (100, 100))
-        tank_image = pg.transform.flip(tank_image, True, False)
+        tank_image = pg.transform.flip(tank_image, False, True)
         tank_rect = tank_image.get_rect()
         tank_center = np.array([tank_rect.width/2, tank_rect.height/2])
         tank_pos = gun_pos - tank_center
