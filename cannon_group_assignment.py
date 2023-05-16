@@ -166,7 +166,6 @@ class Cannon(GameObject):
         tank_image2 = pg.image.load('tank.png')
         tank_image2 = pg.transform.scale(tank_image, (100, 100))
         tank_flip = pg.transform.flip(tank_image2, True, False)
-
         screen.blit(tank_flip,(700,200))
 
 
@@ -297,6 +296,7 @@ class Manager:
         '''
         Handles events from keyboard, mouse, etc.
         '''
+
         done = False
         for event in events:
             if event.type == pg.QUIT:
@@ -313,9 +313,12 @@ class Manager:
                 elif event.key == pg.K_LEFT:
                     self.gun.move_horizontal(-5)
             elif event.type == pg.MOUSEBUTTONDOWN:
+                circles.add(Bombs((randint(1,700),10), screen))
+
                 if event.button == 1:
                     self.gun.activate()
             elif event.type == pg.MOUSEBUTTONUP:
+
                 if event.button == 1:
                     self.balls.append(self.gun.strike())
                     self.score_t.b_used += 1
@@ -364,6 +367,27 @@ class Manager:
         for j in reversed(targets_c):
             self.score_t.t_destr += 1
             self.targets.pop(j)
+
+GRAVITY = .5  # Pretty low gravity.
+
+class Bombs(pg.sprite.Sprite):
+
+    def __init__(self, pos, screen):
+        super().__init__()
+        self.screen = screen
+        self.image = pg.Surface((80, 80), pg.SRCALPHA)
+        pg.draw.circle(self.image, RED, (40, 40), 10)
+        self.rect = self.image.get_rect(center=pos)
+        self.pos_y = pos[1]
+        self.speed_y = 0
+
+    def update(self):
+        self.speed_y += GRAVITY
+        self.pos_y += self.speed_y
+        self.rect.y = self.pos_y
+
+        if self.pos_y > self.screen.get_height():
+            self.kill() 
            
 
 
@@ -374,14 +398,15 @@ done = False
 clock = pg.time.Clock()
 
 mgr = Manager(n_targets=3)
+circles = pg.sprite.Group(Bombs((600, 0), screen))
 
 while not done:
     clock.tick(15)
     screen.fill(BLACK)
-    
+    circles.update()
     done = mgr.process(pg.event.get(), screen)
-
+    circles.draw(screen)
     pg.display.flip()
-
+    clock.tick(60)
 
 pg.quit()
