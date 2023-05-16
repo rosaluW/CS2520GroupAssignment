@@ -163,6 +163,11 @@ class Cannon(GameObject):
         rotated_tank = pg.transform.rotate(tank_image, np.degrees(self.angle))
         screen.blit(rotated_tank, tank_pos)
         
+        tank_image2 = pg.image.load('tank.png')
+        tank_image2 = pg.transform.scale(tank_image, (100, 100))
+        tank_flip = pg.transform.flip(tank_image2, True, False)
+
+        screen.blit(tank_flip,(700,200))
 
 
 class Target(GameObject):
