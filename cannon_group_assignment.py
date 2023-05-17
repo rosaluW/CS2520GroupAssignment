@@ -70,12 +70,9 @@ class Shell(GameObject):
 
     def draw(self, screen):
         '''
-        Adds the background image
         Draws the ball on appropriate surface.
         '''
-        #pg.draw.circle(screen, self.color, self.coord, self.rad)
         missle = pg.image.load('missle.png')
-       
         screen.blit(missle,self.coord)
               
 
@@ -217,9 +214,6 @@ class Target(GameObject):
 
     def draw(self, screen):
        # Draws the target on the screen  
-            
-       #pg.draw.circle(screen, self.color, self.coord, self.rad)
-
        smile = pg.image.load('smallface.png')
        screen.blit(smile,self.coord)
 

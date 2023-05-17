@@ -1,6 +1,6 @@
 # CS2520GroupAssignment
 Final Assignment of CS2520
-Group Members: Rosalu-Mae Wycoco, Daniel Porras, and Aye Mon
+Group 10: Rosalu-Mae Wycoco, Daniel Porras, and Aye Mon
 
 The objective of this group assignment is to collaboratively refactor and extend a project, The Cannon Game, that was previously completed in class. The goal is to modify the codebase to promote modular and object-oriented programming, making it more adaptable and easier to modify for future programmers that want to add additional features. In addition, we are to add new functional features, including:
 
