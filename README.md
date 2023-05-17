@@ -9,3 +9,6 @@ The objective of this group assignment is to collaboratively refactor and extend
 3. Transform the cannon into a moving tank.
 4. Create "bombs" that will be dropped by targets onto the cannon.
 5. Implement multiple cannons that can shoot at each other.
+
+link to extra credit video:
+https://livecsupomona-my.sharepoint.com/:v:/g/personal/acmon_cpp_edu/ESgJIH7HPp1Llrtqz7yo0q8Bi-epUIc5t1gm04UAysBNXQ?e=WVmnmg
